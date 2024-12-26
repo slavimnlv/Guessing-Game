@@ -1,0 +1,31 @@
+<section>
+  <h1>New Guessing Game</h1>
+  <form class="form" [formGroup]="gameForm" (ngSubmit)="createGame()">
+    <div class="form-rows">
+      <label> Start Range: </label>
+      <input type="number" formControlName="rangeStart" />
+    </div>
+
+    <div class="form-rows">
+      <label> End Range: </label>
+      <input type="number" formControlName="rangeEnd" />
+    </div>
+
+    <button type="submit" [disabled]="gameForm.invalid">Start Game</button>
+
+    <div>
+      <p *ngIf="gameForm.get('rangeStart')?.hasError('required')">
+        Start Range is required.
+      </p>
+      <p *ngIf="gameForm.get('rangeStart')?.hasError('pattern')">
+        Start Range must be an integer.
+      </p>
+      <p *ngIf="gameForm.get('rangeEnd')?.hasError('required')">
+        End Range is required.
+      </p>
+      <p *ngIf="gameForm.get('rangeEnd')?.hasError('pattern')">
+        End Range must be an integer.
+      </p>
+    </div>
+  </form>
+</section>

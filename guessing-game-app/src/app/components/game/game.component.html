@@ -1,0 +1,41 @@
+<section>
+  <div *ngIf="game">
+    <h1>
+      Guess a number between {{ game.rangeStart }} and {{ game.rangeEnd }}
+    </h1>
+    <div class="centered">
+      Guesses:
+      <p class="guesses">{{ game.guesses.join(", ") }}</p>
+    </div>
+
+    <div class="form">
+      <div class="form-rows">
+        <input type="number" [formControl]="guess" />
+        <button
+          (click)="makeGuess()"
+          [disabled]="guess.invalid || game.status !== gameStatus.Ongoing"
+        >
+          Make Guess
+        </button>
+      </div>
+      <div class="errors centered">
+        <p *ngIf="guess.hasError('required')">Guess is required.</p>
+        <p *ngIf="guess.hasError('min')">
+          Guess must be greater than {{ game.rangeStart }}.
+        </p>
+        <p *ngIf="guess.hasError('max')">
+          Guess must be less than {{ game.rangeEnd }}.
+        </p>
+        <p *ngIf="guess.hasError('pattern')">
+          Please enter a valid integer (no decimals).
+        </p>
+      </div>
+    </div>
+
+    <div class="centered">
+      <h2 *ngIf="message">{{ message }}</h2>
+
+      <button (click)="startNewGame()">Start New Game</button>
+    </div>
+  </div>
+</section>
